@@ -4,13 +4,7 @@ EduManager is a robust, modern, and comprehensive **Student Management System** 
 
 ---
 
-## 🌟 What is a `.md` (Markdown) File?
-A **Markdown (`.md`)** file is a lightweight document formatting standard used globally by developers. On **GitHub**, when you place a file named `README.md` in the root folder of your project, GitHub automatically renders it as the **homepage** of your repository. 
-
-### Why is this file important for your project?
-1. **First Impression:** Anyone who visits your GitHub repo or downloads your Google Drive folder sees this page first. It introduces your project beautifully.
-2. **Setup Instructions:** It gives clear, step-by-step guidance on how to install and run your backend and frontend.
-3. **Viva / Presentation Prep:** If you are presenting this project to your professor, examiner ("Sir"), or classmates, this file acts as your ultimate documentation and quick reference sheet.
+[![Download from Google Drive](https://img.shields.io/badge/Download-Google%20Drive-blue?style=for-the-badge&logo=google-drive)](👉 PASTE_YOUR_LINK_HERE 👈)
 
 ---
 
