@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EduManager Student Management Project Explanation</title>
+  <style>
+    @page { size: A4; margin: 16mm; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #172033;
+      line-height: 1.42;
+      background: #fff;
+      font-size: 11.2pt;
+    }
+    .cover {
+      padding: 24px 0 18px;
+      border-bottom: 4px solid #2b6cb0;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      color: #163b6d;
+      font-size: 29pt;
+      letter-spacing: 0;
+    }
+    .subtitle {
+      color: #46556c;
+      font-size: 13pt;
+      max-width: 680px;
+    }
+    .meta {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+      font-size: 10pt;
+      color: #34445e;
+    }
+    h2 {
+      color: #1d4f8f;
+      font-size: 18pt;
+      margin: 22px 0 8px;
+      border-bottom: 1px solid #c9d7ea;
+      padding-bottom: 4px;
+      page-break-after: avoid;
+    }
+    h3 {
+      color: #23405f;
+      font-size: 13.5pt;
+      margin: 15px 0 6px;
+      page-break-after: avoid;
+    }
+    p { margin: 6px 0 9px; }
+    ul, ol { margin-top: 5px; padding-left: 22px; }
+    li { margin: 3px 0; }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      background: #eef4fb;
+      color: #143b64;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 9.6pt;
+    }
+    pre {
+      background: #10243d;
+      color: #f4f8ff;
+      padding: 10px 12px;
+      border-radius: 7px;
+      white-space: pre-wrap;
+      font-size: 9.4pt;
+      line-height: 1.34;
+      margin: 8px 0 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 12px;
+      page-break-inside: avoid;
+    }
+    th {
+      background: #e7f0fb;
+      color: #183b61;
+      text-align: left;
+      font-weight: 700;
+    }
+    th, td {
+      border: 1px solid #c8d6e8;
+      padding: 6px 7px;
+      vertical-align: top;
+      font-size: 10.2pt;
+    }
+    .note {
+      border-left: 4px solid #2b6cb0;
+      background: #f3f8ff;
+      padding: 9px 11px;
+      margin: 10px 0 12px;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin: 10px 0 14px;
+    }
+    .box {
+      border: 1px solid #c8d6e8;
+      border-top: 4px solid #2b6cb0;
+      padding: 9px;
+      border-radius: 6px;
+      background: #fbfdff;
+    }
+    .box strong { color: #1d4f8f; }
+    .page-break { break-before: page; }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <h1>EduManager Student Management System</h1>
+    <div class="subtitle">Basic project data, working explanation, database structure, setup steps, and data creation guide for presentation.</div>
+    <div class="meta">
+      <div><strong>Project Folder:</strong> C:\Users\Yash\Downloads\student mangment</div>
+      <div><strong>Prepared For:</strong> Project explanation to sir</div>
+      <div><strong>Backend:</strong> Python FastAPI + SQLAlchemy</div>
+      <div><strong>Frontend:</strong> Angular 17 + Bootstrap</div>
+      <div><strong>Database:</strong> PostgreSQL first, SQLite fallback</div>
+      <div><strong>API Port:</strong> 3001, <strong>Frontend Port:</strong> 4200</div>
+    </div>
+  </section>
+
+  <h2>1. Project Overview</h2>
+  <p>
+    EduManager is a student management system for managing schools, users, students, teachers, courses,
+    attendance, grades, and analytics. The project has two main parts: a backend API that stores and returns
+    data, and a frontend web app that users operate in the browser.
+  </p>
+  <div class="flow">
+    <div class="box"><strong>Frontend</strong><br>Angular screens for login, dashboard, schools, students, teachers, courses, attendance, grades, and analytics.</div>
+    <div class="box"><strong>Backend</strong><br>FastAPI REST API receives requests, validates data, performs database operations, and returns JSON.</div>
+    <div class="box"><strong>Database</strong><br>Stores schools, users, student profiles, teacher profiles, courses, attendance, and marks.</div>
+  </div>
+
+  <h2>2. Main Technologies</h2>
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Use</th></tr>
+    <tr><td>Frontend</td><td>Angular 17, TypeScript, Bootstrap, Bootstrap Icons</td><td>Builds browser UI and calls backend APIs.</td></tr>
+    <tr><td>Backend</td><td>FastAPI, Uvicorn</td><td>Runs REST API on <code>http://localhost:3001</code>.</td></tr>
+    <tr><td>Database ORM</td><td>SQLAlchemy</td><td>Maps Python classes to database tables.</td></tr>
+    <tr><td>Validation</td><td>Pydantic</td><td>Checks request and response data format.</td></tr>
+    <tr><td>Authentication</td><td>JWT, python-jose, passlib bcrypt</td><td>Login token creation and password hashing.</td></tr>
+    <tr><td>Database</td><td>PostgreSQL or SQLite</td><td>PostgreSQL is tried first; if unavailable, SQLite file <code>sms_db.sqlite</code> is used.</td></tr>
+  </table>
+
+  <h2>3. Folder Structure</h2>
+  <pre>C:\Users\Yash\Downloads\student mangment
+|-- backend
+|   |-- main.py                  FastAPI app entry point
+|   |-- database.py              Database connection and session setup
+|   |-- models.py                SQLAlchemy table models
+|   |-- schemas.py               Pydantic request/response schemas
+|   |-- auth_utils.py            Password hashing and JWT helpers
+|   |-- seed.py                  Creates sample school, users, teacher, student, course
+|   |-- create_user.py           Example script for creating one student
+|   |-- routers                  API modules
+|   |-- sms_db.sqlite            SQLite database file
+|   |-- requirements.txt         Python dependencies
+|   |-- run_server.bat           Starts backend server
+|
+|-- frontend
+    |-- src/app/pages            Main Angular pages
+    |-- src/app/core             API service, auth service, guards, interceptors
+    |-- src/environments         API URL configuration
+    |-- package.json             Frontend scripts and dependencies</pre>
+
+  <h2>4. Backend Working</h2>
+  <p>
+    The backend starts from <code>backend/main.py</code>. It creates database tables using
+    <code>models.Base.metadata.create_all(bind=engine)</code>, enables CORS for Angular, and includes API routers.
+  </p>
+  <table>
+    <tr><th>Router</th><th>API Prefix</th><th>Purpose</th></tr>
+    <tr><td>auth.py</td><td>/api/auth</td><td>Login and registration.</td></tr>
+    <tr><td>schools.py</td><td>/api/schools</td><td>Create, list, update, and deactivate schools.</td></tr>
+    <tr><td>users.py</td><td>/api/users</td><td>Create and manage user accounts.</td></tr>
+    <tr><td>students.py</td><td>/api/students</td><td>Create and manage student profiles.</td></tr>
+    <tr><td>teachers.py</td><td>/api/teachers</td><td>Create and manage teacher profiles.</td></tr>
+    <tr><td>courses.py</td><td>/api/courses</td><td>Create and manage courses.</td></tr>
+    <tr><td>attendance.py</td><td>/api/attendance</td><td>Mark and view attendance.</td></tr>
+    <tr><td>grades.py</td><td>/api/grades</td><td>Add and view marks/grades.</td></tr>
+    <tr><td>analytics.py</td><td>/api/analytics</td><td>Dashboard counts and school reports.</td></tr>
+  </table>
+
+  <h2>5. Frontend Working</h2>
+  <p>
+    The frontend is an Angular app. It calls the API URL defined in
+    <code>frontend/src/environments/environment.ts</code>:
+    <code>http://localhost:3001/api</code>. Routes are defined in <code>src/app/app.routes.ts</code>.
+  </p>
+  <table>
+    <tr><th>Page Route</th><th>Who Can Access</th><th>Use</th></tr>
+    <tr><td>/login</td><td>Everyone</td><td>User login.</td></tr>
+    <tr><td>/dashboard</td><td>Logged-in users</td><td>Summary cards and quick actions.</td></tr>
+    <tr><td>/schools</td><td>Super admin</td><td>Manage schools.</td></tr>
+    <tr><td>/students</td><td>Super admin, school admin, teacher</td><td>Manage students.</td></tr>
+    <tr><td>/teachers</td><td>Super admin, school admin</td><td>Manage teachers.</td></tr>
+    <tr><td>/courses</td><td>Logged-in users</td><td>Manage or view courses.</td></tr>
+    <tr><td>/attendance</td><td>Logged-in users</td><td>Mark and view attendance.</td></tr>
+    <tr><td>/grades</td><td>Logged-in users</td><td>Add and view grades.</td></tr>
+    <tr><td>/analytics</td><td>Super admin, school admin</td><td>View reports and statistics.</td></tr>
+  </table>
+
+  <h2>6. Database Tables</h2>
+  <table>
+    <tr><th>Table</th><th>Important Fields</th><th>Relationship</th></tr>
+    <tr><td>schools</td><td>name, address, city, email, phone, subscription_plan, is_active</td><td>One school has many users, students, teachers, and courses.</td></tr>
+    <tr><td>users</td><td>email, password_hash, role, first_name, last_name, phone, school_id</td><td>User can be admin, teacher, student, parent, or super admin.</td></tr>
+    <tr><td>students</td><td>school_id, user_id, enrollment_number, grade_level, section, guardian details</td><td>Student profile links to one user and one school.</td></tr>
+    <tr><td>teachers</td><td>school_id, user_id, employee_id, department, qualification, salary</td><td>Teacher profile links to one user and one school.</td></tr>
+    <tr><td>courses</td><td>school_id, teacher_id, name, code, grade_level, section, schedule</td><td>Course belongs to a school and can be assigned to a teacher.</td></tr>
+    <tr><td>attendance</td><td>student_id, course_id, date, status, remarks</td><td>Attendance links student and course.</td></tr>
+    <tr><td>grades</td><td>student_id, course_id, exam_name, marks_obtained, total_marks, grade_letter</td><td>Grade links student and course.</td></tr>
+  </table>
+
+  <h2>7. User Roles</h2>
+  <table>
+    <tr><th>Role</th><th>Meaning</th><th>Example Access</th></tr>
+    <tr><td>super_admin</td><td>Main system admin</td><td>Manage schools and view full analytics.</td></tr>
+    <tr><td>school_admin</td><td>Admin for one school</td><td>Manage students, teachers, courses, school analytics.</td></tr>
+    <tr><td>teacher</td><td>Teacher user</td><td>View/manage students, courses, attendance, grades.</td></tr>
+    <tr><td>student</td><td>Student user</td><td>View student dashboard and school information.</td></tr>
+    <tr><td>parent</td><td>Parent role available in model</td><td>Can be extended for parent dashboard.</td></tr>
+  </table>
+
+  <h2>8. How To Run The Project</h2>
+  <h3>Backend</h3>
+  <ol>
+    <li>Open terminal in <code>C:\Users\Yash\Downloads\student mangment\backend</code>.</li>
+    <li>Install dependencies if needed: <code>pip install -r requirements.txt</code>.</li>
+    <li>Run backend: <code>run_server.bat</code>.</li>
+    <li>Backend API will run at <code>http://localhost:3001</code>.</li>
+    <li>API documentation opens at <code>http://localhost:3001/docs</code>.</li>
+  </ol>
+  <h3>Frontend</h3>
+  <ol>
+    <li>Open another terminal in <code>C:\Users\Yash\Downloads\student mangment\frontend</code>.</li>
+    <li>Install packages if needed: <code>npm install</code>.</li>
+    <li>Start Angular: <code>npm start</code> or <code>ng serve</code>.</li>
+    <li>Open browser: <code>http://localhost:4200</code>.</li>
+  </ol>
+  <div class="note">
+    Start backend first, then frontend. The frontend expects the API at <code>http://localhost:3001/api</code>.
+  </div>
+
+  <h2>9. Default Sample Data</h2>
+  <p>
+    The file <code>backend/seed.py</code> creates basic demo data. Run it from the backend folder:
+  </p>
+  <pre>python seed.py</pre>
+  <table>
+    <tr><th>Data</th><th>Value Created</th></tr>
+    <tr><td>School</td><td>Delhi Public School, Dwarka, New Delhi, email info@dps.edu.in, premium plan.</td></tr>
+    <tr><td>Super Admin</td><td>admin@edumanager.com / admin123</td></tr>
+    <tr><td>School Admin</td><td>principal@dps.edu.in / school123</td></tr>
+    <tr><td>Teacher</td><td>anita.sharma@dps.edu.in / teacher123, Mathematics department, employee ID TCH-001.</td></tr>
+    <tr><td>Student</td><td>rahul.verma@dps.edu.in / student123, enrollment STU-2026-001, class 10-A.</td></tr>
+    <tr><td>Course</td><td>Mathematics, code MATH-10, class 10-A, schedule Mon/Wed/Fri 9:00-10:00.</td></tr>
+  </table>
+
+  <h2>10. How To Create Data In The App</h2>
+  <h3>Create School</h3>
+  <ol>
+    <li>Login as super admin.</li>
+    <li>Open <code>Schools</code>.</li>
+    <li>Click add/create school.</li>
+    <li>Enter school name, city, email, phone, website, plan, and save.</li>
+  </ol>
+  <h3>Create Student</h3>
+  <ol>
+    <li>Login as super admin or school admin.</li>
+    <li>Open <code>Students</code>.</li>
+    <li>Add student details: school, first name, last name, email, phone, grade level, section, guardian details, and enrollment number.</li>
+    <li>System creates a user account with role <code>student</code> and a linked student profile.</li>
+  </ol>
+  <h3>Create Teacher</h3>
+  <ol>
+    <li>Login as super admin or school admin.</li>
+    <li>Open <code>Teachers</code>.</li>
+    <li>Enter school, name, email, phone, employee ID, department, qualification, specialization, joining date, and salary.</li>
+    <li>System creates a user account with role <code>teacher</code> and a linked teacher profile.</li>
+  </ol>
+  <h3>Create Course</h3>
+  <ol>
+    <li>Open <code>Courses</code>.</li>
+    <li>Enter school, course name, code, teacher, grade level, section, description, and schedule.</li>
+    <li>Save the course so attendance and grades can use it.</li>
+  </ol>
+  <h3>Mark Attendance</h3>
+  <ol>
+    <li>Open <code>Attendance</code>.</li>
+    <li>Select student, course, date, and status: present, absent, late, or excused.</li>
+    <li>Save records. The backend stores them in the <code>attendance</code> table.</li>
+  </ol>
+  <h3>Add Grades</h3>
+  <ol>
+    <li>Open <code>Grades</code>.</li>
+    <li>Select student and course.</li>
+    <li>Enter exam name, marks obtained, total marks, grade letter, remarks, and date.</li>
+    <li>Save. The analytics page can calculate average grades from this data.</li>
+  </ol>
+
+  <h2>11. API Examples For Explanation</h2>
+  <p>These examples can be shown in FastAPI Swagger at <code>http://localhost:3001/docs</code>.</p>
+  <pre>POST /api/auth/login
+{
+  "email": "admin@edumanager.com",
+  "password": "admin123"
+}</pre>
+  <pre>POST /api/schools
+{
+  "name": "ABC Public School",
+  "city": "Ahmedabad",
+  "state": "Gujarat",
+  "email": "info@abcschool.edu.in",
+  "phone": "9876543210",
+  "subscription_plan": "basic"
+}</pre>
+  <pre>POST /api/students
+{
+  "school_id": 1,
+  "user_id": 1,
+  "email": "student.personal@gmail.com",
+  "first_name": "Yash",
+  "last_name": "Patel",
+  "password": "student123",
+  "grade_level": "10",
+  "section": "A",
+  "enrollment_number": "STU-2026-003",
+  "guardian_name": "Parent Name",
+  "guardian_phone": "9876543210"
+}</pre>
+  <pre>POST /api/attendance
+{
+  "records": [
+    {
+      "student_id": 1,
+      "course_id": 1,
+      "date": "2026-05-25",
+      "status": "present",
+      "remarks": "On time"
+    }
+  ]
+}</pre>
+  <pre>POST /api/grades
+{
+  "student_id": 1,
+  "course_id": 1,
+  "exam_name": "Unit Test 1",
+  "marks_obtained": 85,
+  "total_marks": 100,
+  "grade_letter": "A",
+  "remarks": "Good performance",
+  "date": "2026-05-25"
+}</pre>
+
+  <h2>12. Login And Authentication Flow</h2>
+  <ol>
+    <li>User enters email and password on Angular login page.</li>
+    <li>Angular sends data to <code>POST /api/auth/login</code>.</li>
+    <li>Backend checks the user email and verifies bcrypt password hash.</li>
+    <li>If correct, backend creates a JWT token with user email and role.</li>
+    <li>Frontend stores the token and uses route guards to protect pages.</li>
+    <li>Role guard controls which page each role can open.</li>
+  </ol>
+
+  <h2>13. How API Is Connected And Data Is Fetched</h2>
+  <p>
+    In this project, Angular does not talk to the database directly. Angular calls the FastAPI backend,
+    and the backend talks to the database. This is the main flow:
+  </p>
+  <pre>Angular Page Component
+    -> calls Angular ApiService/AuthService function
+    -> HttpClient sends request to http://localhost:3001/api/...
+    -> FastAPI router function receives request
+    -> SQLAlchemy queries or inserts database data
+    -> Backend returns JSON response
+    -> Angular subscribe() receives JSON
+    -> Component variable updates and HTML table/card displays data</pre>
+
+  <h3>API Base URL</h3>
+  <p>
+    The frontend API connection is stored in <code>frontend/src/environments/environment.ts</code>.
+    This file tells Angular where the backend is running.
+  </p>
+  <pre>export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:3001/api',
+};</pre>
+  <p>
+    If backend is running on another port, change this <code>apiUrl</code>. For this project,
+    backend port is <code>3001</code>, so frontend calls URLs like
+    <code>http://localhost:3001/api/students</code>.
+  </p>
+
+  <h3>Main API Service File</h3>
+  <p>
+    Most API functions are written in <code>frontend/src/app/core/api.service.ts</code>.
+    This file uses Angular <code>HttpClient</code> to call backend APIs.
+  </p>
+  <pre>private base = environment.apiUrl;
+
+getStudents(params?: any): Observable&lt;any&gt; {
+  let httpParams = new HttpParams();
+  // query params are added here
+  return this.http.get(`${this.base}/students`, { params: httpParams });
+}
+
+createStudent(data: any): Observable&lt;any&gt; {
+  return this.http.post(`${this.base}/students`, data);
+}</pre>
+  <p>
+    Meaning: <code>getStudents()</code> fetches students using GET request, and
+    <code>createStudent()</code> creates a new student using POST request.
+  </p>
+
+  <h3>Where Function Is Called In Frontend</h3>
+  <p>
+    Example: in <code>frontend/src/app/pages/students/students.component.ts</code>,
+    the <code>load()</code> function calls <code>this.api.getStudents(params)</code>.
+    When the response comes, it stores data into <code>this.students</code>.
+  </p>
+  <pre>load() {
+  const params: any = { search: this.search || undefined, page: this.pagination.page };
+
+  this.api.getStudents(params).subscribe({
+    next: r => {
+      this.students = r.students || [];
+      this.pagination = r.pagination || this.pagination;
+    },
+    error: () => {},
+  });
+}</pre>
+  <p>
+    Then the HTML table uses <code>*ngFor="let s of students"</code> to display all student rows.
+  </p>
+  <pre>&lt;tr *ngFor="let s of students"&gt;
+  &lt;td&gt;{{ s.firstName }} {{ s.lastName }}&lt;/td&gt;
+  &lt;td&gt;{{ s.enrollmentNumber }}&lt;/td&gt;
+  &lt;td&gt;{{ s.section }}&lt;/td&gt;
+&lt;/tr&gt;</pre>
+
+  <h3>How Create Student Works</h3>
+  <p>
+    When user clicks save in the student form, <code>onSave()</code> runs. If editing is false,
+    it calls <code>createStudent()</code>. After successful save, it hides the form and calls
+    <code>load()</code> again to refresh table data.
+  </p>
+  <pre>onSave() {
+  const obs = this.editing
+    ? this.api.updateStudent(this.editing.id, this.form)
+    : this.api.createStudent(this.form);
+
+  obs.subscribe({
+    next: () => {
+      this.showForm = false;
+      this.load();
+    },
+    error: () => {},
+  });
+}</pre>
+
+  <h3>Backend Function That Receives Student API</h3>
+  <p>
+    The backend student APIs are in <code>backend/routers/students.py</code>.
+    The route prefix is <code>/api/students</code>. So this function handles
+    <code>GET /api/students</code>.
+  </p>
+  <pre>@router.get("")
+def list_students(..., db: Session = Depends(get_db)):
+    query = db.query(models.Student)
+    students = query.offset(offset).limit(limit).all()
+    return {
+        "students": [_student_to_dict(s) for s in students],
+        "pagination": {
+            "page": page,
+            "totalPages": total_pages,
+            "total": total
+        }
+    }</pre>
+  <p>
+    This function reads from the <code>students</code> table using SQLAlchemy and returns JSON.
+  </p>
+
+  <h3>Backend Function That Creates Student</h3>
+  <p>
+    This function handles <code>POST /api/students</code>. It creates a user first, then creates a
+    student profile linked with that user.
+  </p>
+  <pre>@router.post("", status_code=201)
+def create_student(data: schemas.StudentCreate, db: Session = Depends(get_db)):
+    user = models.User(
+        email=official_email,
+        password_hash=hashed,
+        role=models.RoleEnum.student,
+        first_name=data.first_name,
+        last_name=data.last_name,
+        school_id=data.school_id,
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    student = models.Student(
+        school_id=data.school_id,
+        user_id=user.id,
+        enrollment_number=data.enrollment_number,
+        grade_level=data.grade_level,
+        section=data.section,
+    )
+    db.add(student)
+    db.commit()
+    db.refresh(student)
+    return _student_to_dict(student)</pre>
+
+  <h2>14. Login API Code Flow</h2>
+  <p>
+    Login starts from <code>frontend/src/app/pages/login/login.component.ts</code>. When user submits
+    the form, <code>onLogin()</code> calls <code>this.auth.login(email, password)</code>.
+  </p>
+  <pre>onLogin(): void {
+  this.auth.login(this.email, this.password).subscribe({
+    next: () => this.router.navigate(['/dashboard']),
+    error: (err) => this.error = 'Login failed.'
+  });
+}</pre>
+  <p>
+    The login API function is in <code>frontend/src/app/core/auth.service.ts</code>.
+  </p>
+  <pre>login(email: string, password: string): Observable&lt;LoginResponse&gt; {
+  return this.http.post&lt;LoginResponse&gt;(`${this.apiUrl}/auth/login`, { email, password }).pipe(
+    tap(res => {
+      localStorage.setItem('sms_token', res.accessToken);
+      localStorage.setItem('sms_user', JSON.stringify(res.user));
+      this.currentUserSubject.next(res.user);
+    })
+  );
+}</pre>
+  <p>
+    Backend receives this in <code>backend/routers/auth.py</code> at <code>POST /api/auth/login</code>.
+    It checks email, verifies password, creates JWT token, and returns user data.
+  </p>
+  <pre>@router.post("/login")
+def login(request: schemas.LoginRequest, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.email == request.email).first()
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    if not auth_utils.verify_password(request.password, user.password_hash):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    access_token = auth_utils.create_access_token(
+        data={"sub": user.email, "role": user.role}
+    )
+    return { "accessToken": access_token, "user": {...} }</pre>
+
+  <h2>15. Common Function Call Map</h2>
+  <table>
+    <tr><th>User Action</th><th>Angular Component Function</th><th>Angular Service Function</th><th>Backend API Function</th></tr>
+    <tr><td>Login</td><td><code>LoginComponent.onLogin()</code></td><td><code>AuthService.login()</code></td><td><code>auth.py login()</code></td></tr>
+    <tr><td>Load Dashboard Counts</td><td><code>DashboardComponent.ngOnInit()</code></td><td><code>getOverviewAnalytics()</code></td><td><code>analytics.py overview_analytics()</code></td></tr>
+    <tr><td>Load Students</td><td><code>StudentsComponent.load()</code></td><td><code>getStudents()</code></td><td><code>students.py list_students()</code></td></tr>
+    <tr><td>Add Student</td><td><code>StudentsComponent.onSave()</code></td><td><code>createStudent()</code></td><td><code>students.py create_student()</code></td></tr>
+    <tr><td>Edit Student</td><td><code>StudentsComponent.onSave()</code></td><td><code>updateStudent()</code></td><td><code>students.py update_student()</code></td></tr>
+    <tr><td>Delete Student</td><td><code>StudentsComponent.onDelete()</code></td><td><code>deleteStudent()</code></td><td><code>students.py delete_student()</code></td></tr>
+    <tr><td>Load Teachers</td><td><code>TeachersComponent.load()</code></td><td><code>getTeachers()</code></td><td><code>teachers.py list_teachers()</code></td></tr>
+    <tr><td>Add Teacher</td><td><code>TeachersComponent.onSave()</code></td><td><code>createTeacher()</code></td><td><code>teachers.py create_teacher()</code></td></tr>
+    <tr><td>Load Courses</td><td><code>CoursesComponent load method</code></td><td><code>getCourses()</code></td><td><code>courses.py list_courses()</code></td></tr>
+    <tr><td>Mark Attendance</td><td><code>AttendanceComponent save method</code></td><td><code>markAttendance()</code></td><td><code>attendance.py mark_attendance()</code></td></tr>
+    <tr><td>Add Grade</td><td><code>GradesComponent save method</code></td><td><code>createGrade()</code></td><td><code>grades.py create_grade()</code></td></tr>
+  </table>
+
+  <h2>16. How To Create Similar Code Yourself</h2>
+  <ol>
+    <li>Create database model in <code>models.py</code>, for example <code>Student</code>.</li>
+    <li>Create request/response schema in <code>schemas.py</code>, for example <code>StudentCreate</code>.</li>
+    <li>Create backend router function in <code>routers/students.py</code>, for example <code>@router.post("")</code>.</li>
+    <li>Include router in <code>main.py</code> using <code>app.include_router(students.router)</code>.</li>
+    <li>Create Angular service function in <code>api.service.ts</code>, for example <code>createStudent(data)</code>.</li>
+    <li>Call service function from component, for example <code>StudentsComponent.onSave()</code>.</li>
+    <li>Bind HTML form fields using <code>[(ngModel)]</code> so user input goes into <code>form</code> object.</li>
+    <li>Use <code>subscribe()</code> to receive response and refresh the page data.</li>
+  </ol>
+  <pre>// Simple frontend create pattern
+form = { name: '', email: '' };
+
+onSave() {
+  this.api.createSomething(this.form).subscribe({
+    next: () => this.load(),
+    error: () => alert('Error saving data')
+  });
+}
+
+// Simple backend create pattern
+@router.post("")
+def create_item(data: ItemCreate, db: Session = Depends(get_db)):
+    item = models.Item(**data.model_dump())
+    db.add(item)
+    db.commit()
+    db.refresh(item)
+    return item</pre>
+
+  <h2>17. How To Explain API Fetching To Sir</h2>
+  <p>
+    "Sir, the frontend and backend are connected through REST APIs. I stored the backend URL in the
+    Angular environment file. Then I created an ApiService file where all HTTP functions are written.
+    For example, when I open the Students page, the component's load function calls getStudents from
+    ApiService. ApiService sends a GET request to /api/students. FastAPI receives it in students.py,
+    queries the database using SQLAlchemy, and returns JSON. Angular receives that JSON inside
+    subscribe and assigns it to the students array. The HTML table uses ngFor to display the array.
+    For create operations, the form data is sent by POST request, backend inserts it into database,
+    and frontend reloads the list."
+  </p>
+
+  <h2>18. Explanation Script For Sir</h2>
+  <p>
+    "Sir, this is my EduManager student management project. I have divided it into two parts:
+    Angular frontend and FastAPI backend. The frontend gives screens like login, dashboard,
+    schools, students, teachers, courses, attendance, grades, and analytics. The backend provides
+    REST APIs and stores data using SQLAlchemy models. First, the user logs in. The backend verifies
+    the password and returns a JWT token. According to the user's role, the frontend allows access
+    to different pages. For example, the super admin can manage schools, school admin can manage
+    school data, teachers can work with students and academic data, and students can view their dashboard.
+    The main database tables are schools, users, students, teachers, courses, attendance, and grades.
+    I also created a seed file to generate demo data for quick testing."
+  </p>
+
+  <h2>19. Important Notes</h2>
+  <ul>
+    <li>If PostgreSQL is not available, the backend automatically falls back to SQLite.</li>
+    <li>The SQLite database file is <code>backend/sms_db.sqlite</code>.</li>
+    <li>Use <code>http://localhost:3001/docs</code> to test APIs directly.</li>
+    <li>Use <code>http://localhost:4200</code> to use the Angular application.</li>
+    <li>Seed login accounts are useful for demo and viva explanation.</li>
+  </ul>
+</body>
+</html>
