@@ -3,11 +3,9 @@
 EduManager is a full-stack **Student Management System** featuring a high-performance **FastAPI backend** (Python) and a dynamic **Angular 17 frontend** (TypeScript & Bootstrap). It provides school administration, role-based access (Admins, Teachers, Students), attendance tracking, grade sheets, and analytical dashboards.
 
 ---
-
-# Download from Google Drive
 # Download from Google Drive
 
-[Download File](https://drive.google.com/uc?export=download&id=https://drive.google.com/drive/folders/1y2a6i0q7E4LjIDoBE2dKO7ktv7DnSIi1?usp=drive_link)
+[Download File](https://drive.google.com/drive/folders/1y2a6i0q7E4LjIDoBE2dKO7ktv7DnSIi1?usp=drive_link)
 
 
 
