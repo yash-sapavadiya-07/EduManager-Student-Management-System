@@ -49,10 +49,6 @@ npm start
 | **Teacher** | `anita.sharma@dps.edu.in` | `teacher123` | Mark attendance and record exam grades |
 | **Student** | `rahul.verma@dps.edu.in` | `student123` | Personal academic and attendance dashboard |
 
----
-
-### 🎓 Quick Presentation / Viva Explainer
-> *"Sir, **EduManager** is built using a decoupled architecture. The backend runs on **FastAPI (Python)** using **SQLAlchemy** to query a database (with an automatic fallback to local **SQLite**). The frontend is built using **Angular 17** and **Bootstrap**. They connect seamlessly through **JSON REST APIs** protected by **JWT authentication**."*
 
 ---
 
