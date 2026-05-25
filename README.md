@@ -9,11 +9,6 @@ EduManager is a full-stack **Student Management System** featuring a high-perfor
 
 ---
 
-# Download from Google Drive
-
-[![Google Drive](https://upload.wikimedia.org/wikipedia/commons/0/0b/Google_Drive_icon_%282026%29.svg)](https://drive.google.com/uc?export=download&id=YOUR_FILE_ID)
-
-
 ### 🚀 Quick Setup & Run Guide
 
 #### 1️⃣ Backend API Setup (`/backend`)
